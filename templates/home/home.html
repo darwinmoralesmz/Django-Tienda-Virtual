@@ -1,0 +1,148 @@
+{% extends '../layout/frontend.html' %} 
+{% load static %}
+{% load utilidades %}
+{% block title %} Inicio {% endblock %}
+{% block content %}
+
+<div class="hero">
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-lg-5">
+                <div class="intro-excerpt">
+                    <h1>Láminas de Hidrogel <span clsas="d-block"></span></h1>
+                    <p class="mb-4">¡Protege tus dispositivos con nuestras láminas de hidrogel! Disponibles en transparente o anti espía, se adaptan a todos los modelos para brindarte la mejor protección sin sacrificar la calidad visual. </p>
+
+
+
+
+
+                    </p>
+                    <p><a href="" class="btn btn-secondary me-2">Saber más</a></p>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="hero-img-wrap">
+                    <img src="{% static 'images/12.png' %}" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="untree_co-section product-section before-footer-section">
+    <div class="container">
+        <div class="row">
+            {% for dato in datos %}
+            <!-- Start Column 1 -->
+            <div class="col-12 col-md-4 col-lg-3 mb-5">
+                <a class="product-item" href="{% url 'productos_detalle' dato.id dato.slug %}">
+                    <img src="{% static 'upload/producto/' %}{{dato.foto}}" class="img-fluid product-thumbnail" alt="{{dato.nombre}}">
+                    <h3 class="product-title">{{dato.nombre}}</h3>
+                    {% if dato.precio_antes > dato.precio %}
+                    
+                        <h3 class="last-price">$ {{dato.precio_antes|numberFormat}}</h3>
+                      
+                    
+                    {% endif %}
+                    <strong class="product-price">$ {{dato.precio|numberFormat}}</strong>
+                    <span class="icon-cross">
+                        <img src="{% static 'images/cross.svg' %}" class="img-fluid">
+                    </span>
+                </a>
+            </div> 
+            <!-- End Column 1 -->
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- Start Blog Section -->
+<div class="blog-section">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-md-6">
+                <h2 class="section-title">Servicio Tecnico</h2>
+            </div>
+            <div class="col-md-6 text-start text-md-end">
+                <a href="#" class="more"></a>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-12 col-sm-6 col-md-4 mb-4 mb-md-0">
+                <div class="post-entry">
+                    <a  class="post-thumbnail"><img src="{% static 'images/1.jpg' %}" alt="Image" class="img-fluid"></a>
+                    <div class="post-content-entry">
+                        <h3><a >Servicio de Reparación de Pantalla</a></h3>
+                        <div class="meta">
+                            <span>Solucionamos problemas de pantalla con precisión y rapidez.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-12 col-sm-6 col-md-4 mb-4 mb-md-0">
+                <div class="post-entry">
+                    <a  class="post-thumbnail"><img src="{% static 'images/2.jpg' %}" alt="Image" class="img-fluid"></a>
+                    <div class="post-content-entry">
+                        <h3><a >Cambio de Baterías de Calidad</a></h3>
+                        <div class="meta">
+                            <span>Renueva la energía de tu dispositivo con nuestras baterías de alta calidad.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-12 col-sm-6 col-md-4 mb-4 mb-md-0">
+                <div class="post-entry">
+                    <a  class="post-thumbnail"><img src="{% static 'images/3.jpg' %}" alt="Image" class="img-fluid"></a>
+                    <div class="post-content-entry">
+                        <h3><a >Servicios Personalizados para tus Dispositivos</a></h3>
+                        <div class="meta">
+                            <span>Adaptamos nuestros servicios a tus necesidades, brindándote soluciones a medida </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+        </div>
+    </div>
+</div>
+
+
+<div class="untree_co-section product-section before-footer-section">
+    <div class="container">
+        <div class="row">
+            {% for dato in fechas %}
+            <!-- Start Column 1 -->
+            <div class="col-12 col-md-4 col-lg-3 mb-5">
+                <a class="product-item" href="{% url 'productos_detalle' dato.id dato.slug %}">
+                    <img src="{% static 'upload/producto/' %}{{dato.foto}}" class="img-fluid product-thumbnail" alt="{{dato.nombre}}">
+                    <h3 class="product-title">{{dato.nombre}}</h3>
+                    {% if dato.precio_antes > dato.precio %}
+                    
+                    <h3 class="last-price">$ {{dato.precio_antes|numberFormat}}</h3>
+                      
+                    
+                    {% endif %}
+                    <strong class="product-price">$ {{dato.precio|numberFormat}}</strong>
+                    <span class="icon-cross">
+                        <img src="{% static 'images/cross.svg' %}" class="img-fluid">
+                    </span>
+                </a>
+            </div> 
+            <!-- End Column 1 -->
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

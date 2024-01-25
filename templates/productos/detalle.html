@@ -1,0 +1,113 @@
+{% extends '../layout/frontend.html' %} 
+{% load static %}
+{% load utilidades %}
+{% block title %} Detalle producto {{datos.nombre}} {% endblock %}
+{% block content %}
+<section class="py-5">
+            <div class="container px-4 px-lg-5 my-5">
+    <div class="row gx-4 gx-lg-5 align-items-center">
+        <div class="col-md-6">
+        <!--galería-->
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    {% for foto in fotos %}
+    <div class="carousel-item {% if forloop.counter0 is 0 %}active{% endif %}">
+      <img src="{% static 'upload/producto/' %}{{foto.foto}}" class="d-block w-100" alt="{{datos.nombre}}" />
+    </div>
+   {% endfor %} 
+    
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+        <!--/galería-->   
+        </div>
+                    <div class="col-md-6">
+                      <div class = "product-content"></div>
+                      <h2 class = "product-title">{{datos.nombre}}</h2>
+                      <a href = "#" class = "product-link">Categoría: {{datos.producto_categoria.nombre}}</a>
+                      <div class = "product-price">
+                        <p class = "last-price">Precio Anterior: <span>${{datos.precio_antes|numberFormat}}</span></p>
+                        <p class = "new-price">Nuevo Precio: <span>${{datos.precio|numberFormat }}</span></p>
+                        </div>
+                        <div class = "product-detail">
+                                  <p class="lead">{{datos.descripcion}}</p>
+                                  {% if datos.stock is 0 %}
+                                  <span class="alert alert-danger">PRODUCTO SIN STOCK</span>
+                                  {% else %}
+                                  <div class="d-flex">
+                                    Cantidad
+                                  </div>
+                                  <div class="d-flex">
+                                  </div>
+                           
+       <select class="form-control form-control-sm" id="cantidad" >
+
+      {% with ''|center:datos.stock as range %}
+     {% for _ in range %}
+    <option value="{{ forloop.counter }}">
+    {{ forloop.counter }}
+	</option>
+   {% endfor %} 
+        {% endwith %}
+  </select>
+   </div>
+   <hr/>
+   <div class="botones-container">
+    <button type = "button" class = "btn btn-secondary me-2" href="javascript:void(0);" onclick="agregarAlCarro();">
+      Agregar al Carrito <i class="fas fa-shopping-cart"></i>
+    </button>
+  {% endif %}
+  <a href="https://api.whatsapp.com/send?phone={{4|getMetadata}}&text=Hola%20necesito%20informaci%C3%B3n%20del%20producto%20{{datos.nombre}}" class="btn btn-secondary " title="Pedir por whatsapp" target="_blank">
+    Pedir por WhatsApp <i class="fab fa-whatsapp"></i>
+  </a>
+  </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </section>
+
+
+
+<section class="untree_co-section product-section before-footer-section">
+            <div class="container px-4 px-lg-5 mt-5">
+                <h2 class="fw-bolder mb-4">Productos relacionados</h2>
+
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                    {% for dato in relacionados %}
+
+
+                    <div class="col-12 col-md-4 col-lg-3 mb-5">
+                      <a class="product-item" href="{% url 'productos_detalle' dato.id dato.slug %}">
+                          <img src="{% static 'upload/producto/' %}{{dato.foto}}" class="img-fluid product-thumbnail" alt="{{dato.nombre}}">
+                          <h3 class="product-title">{{dato.nombre}}</h3>
+                          {% if dato.precio_antes > dato.precio %}
+                          
+                              <h3 class="last-price">$ {{dato.precio_antes|numberFormat}}</h3>
+                            
+                          
+                          {% endif %}
+                          <strong class="product-price">$ {{dato.precio|numberFormat}}</strong>
+                          <span class="icon-cross">
+                              <img src="{% static 'images/cross.svg' %}" class="img-fluid">
+                          </span>
+                      </a>
+                  </div> 
+
+                   {% endfor %}
+                </div>
+            </div>
+        </section>
+         <form name="agregar_al_carro" action="{% url 'carro_crear' %}" method="post">
+        {% csrf_token %}
+         <input type="hidden" name="id" id="id" value="{{datos.id}}" />
+         <input type="hidden" name="cantidad" />
+       </form>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends '../layout/frontend.html' %}
+{% load static %}
+{% block title %} Categoria {{datos.nombre}} {% endblock %}
+{% load utilidades %}
+{% block content %} 
+
+<div class="hero">
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-lg-5">
+                <div class="intro-excerpt">
+                    <h1>Categoria: {{datos.nombre}} </h1>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="untree_co-section product-section before-footer-section">
+    <div class="container">
+        <div class="row">
+            {% for dato in datos1 %}
+            <!-- Start Column 1 -->
+            <div class="col-12 col-md-4 col-lg-3 mb-5">
+                <a class="product-item" href="{% url 'productos_detalle' dato.id dato.slug %}">
+                    <img src="{% static 'upload/producto/' %}{{dato.foto}}" class="img-fluid product-thumbnail" alt="{{dato.nombre}}">
+                    <h3 class="product-title">{{dato.nombre}}</h3>
+                    {% if dato.precio_antes > dato.precio %}
+                    
+                    <h3 class="last-price">$ {{dato.precio_antes|numberFormat}}</h3>
+                      
+                    
+                    {% endif %}
+                    <strong class="product-price">$ {{dato.precio|numberFormat}}</strong>
+                    <span class="icon-cross">
+                        <img src="{% static 'images/cart.svg' %}" class="img-fluid">
+                    </span>
+                </a>
+            </div> 
+            <!-- End Column 1 -->
+            {% endfor %}
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,93 @@
+{% extends '../layout/frontend.html' %}
+{% load static %}
+{% block title %} Categoria {{datos.nombre}} {% endblock %}
+{% load utilidades %}
+{% block content %} 
+
+<div class="hero">
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-lg-5">
+                <div class="intro-excerpt">
+                    <h1>Categoria: {{datos.nombre}} </h1>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="untree_co-section product-section before-footer-section">
+    <div class="container">
+        <div class="row">
+            {% for dato in productos_pagina %}
+            <!-- Start Column 1 -->
+            <div class="col-12 col-md-4 col-lg-3 mb-5">
+                <a class="product-item" href="{% url 'productos_detalle' dato.id dato.slug %}">
+                    <img src="{% static 'upload/producto/' %}{{dato.foto}}" class="img-fluid product-thumbnail" alt="{{dato.nombre}}">
+                    <h3 class="product-title">{{dato.nombre}}</h3>
+                    {% if dato.precio_antes > dato.precio %}
+                    
+                        <h3 class="last-price">$ {{dato.precio_antes|numberFormat}}</h3>
+                      
+                    
+                    {% endif %}
+                    <strong class="product-price">$ {{dato.precio|numberFormat}}</strong>
+                    <span class="icon-cross">
+                        <img src="{% static 'images/cross.svg' %}" class="img-fluid">
+                    </span>
+                </a>
+            </div> 
+            
+            <!-- End Column 1 -->
+            {% endfor %}
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    {% if productos_pagina.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1" aria-label="First">
+                                <span aria-hidden="true">&laquo;&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ productos_pagina.previous_page_number }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+        
+                    {% for num in productos_pagina.paginator.page_range %}
+                        <li class="page-item {% if productos_pagina.number == num %}active{% endif %}">
+                            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                        </li>
+                    {% endfor %}
+        
+                    {% if productos_pagina.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ productos_pagina.next_page_number }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ productos_pagina.paginator.num_pages }}" aria-label="Last">
+                                <span aria-hidden="true">&raquo;&raquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            
+            
+        </div>
+        
+    </div>
+</div>
+
+
+
+
+
+
+{% endblock %}
